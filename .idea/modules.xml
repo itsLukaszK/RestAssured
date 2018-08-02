@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Rest Assured.iml" filepath="$PROJECT_DIR$/Rest Assured.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RestAssured_new/RestAssured_new.iml" filepath="$PROJECT_DIR$/RestAssured_new/RestAssured_new.iml" />
     </modules>
   </component>
 </project>
