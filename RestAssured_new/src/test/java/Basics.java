@@ -20,8 +20,8 @@ public class Basics {
     public void beforeTest() {
         FileInputStream eV = null;
         try {
-            eV = new FileInputStream("C:\\Users\\lkrawczyk\\Documents\\RestAssured\\RestAssured_new\\src\\env\\environmentalVariables.properties");
-        } catch (FileNotFoundException e) {
+            eV = new FileInputStream(System.getProperty("user.dir") + "\\src\\env\\environmentalVariables.properties");
+            } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         try {
@@ -31,8 +31,6 @@ public class Basics {
         }
     }
 
-    String key = "AIzaSyDoyakYFQ_zlHRb6Wi3UBC0H3I27NAY6zk";
-
     @Test
     public void test_get() {
         RestAssured.baseURI = properties.getProperty("BASEURI");
@@ -40,7 +38,7 @@ public class Basics {
         given().
                 param("location", "-33.8670522,151.1957362").
                 param("radius", "500").
-                param("key", key).
+                param("key", properties.getProperty("KEY")).
                 when().
                 get("/maps/api/place/nearbysearch/json").
                 then().
@@ -55,7 +53,7 @@ public class Basics {
         RestAssured.baseURI = properties.getProperty("BASEURI");
 
         Response response = given().
-                queryParam("key", key).
+                queryParam("key", properties.getProperty("KEY")).
                 body("(...)").
                 when().
                 post("/maps/api/place/add/json"). // It's not available anymore :(
@@ -70,7 +68,7 @@ public class Basics {
         String place_id = responseJson.get("place_id");
 
         given().
-                queryParam("key", key).
+                queryParam("key", properties.getProperty("KEY")).
                 body("{" +
                         "\"place_id\": \"" + place_id + "\"" +
                         "}").
