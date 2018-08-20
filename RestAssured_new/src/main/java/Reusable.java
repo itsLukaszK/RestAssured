@@ -3,8 +3,6 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.path.xml.XmlPath;
 import io.restassured.response.Response;
 
-import java.util.Properties;
-
 import static io.restassured.RestAssured.given;
 
 
@@ -20,15 +18,15 @@ public class Reusable {
     }
 
     static String getSessionCookie() {
-        Properties properties = new Properties();
-        RestAssured.baseURI = properties.getProperty("JIRABASEURI");
+        RestAssured.baseURI = "localhost:8080";
 
         Response response = given().
                 header("Content-Type", "application/json").
-                body("{ \"username\": \"admin\", \"password\": \"admin\" }").
+                body("{\"username\": \"admin\", \"password\": \"admin\"}").
                 when().
                 post("/rest/auth/1/session").
                 then().
+                statusCode(200).
                 extract().response();
 
         JsonPath responseJson = rawToJson(response);

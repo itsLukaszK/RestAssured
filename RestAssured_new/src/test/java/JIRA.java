@@ -5,35 +5,34 @@ import org.testng.annotations.Test;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Properties;
 
 import static io.restassured.RestAssured.given;
 
 public class JIRA {
-    Properties properties = new Properties();
 
-    @BeforeTest
-    public void beforeTest() {
-        FileInputStream eV = null;
-        try {
-            eV = new FileInputStream(System.getProperty("user.dir") + "\\src\\env\\environmentalVariables.properties");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
-            properties.load(eV);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    @BeforeTest
+//    public void beforeTest() {
+//        FileInputStream eV = null;
+//        try {
+//            eV = new FileInputStream(System.getProperty("user.dir") + "\\src\\env\\environmentalVariables.properties");
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            properties.load(eV);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     @Test
     public void test_createIssue() {
-        RestAssured.baseURI = properties.getProperty("JIRABASEURI");
+        RestAssured.baseURI = "localhost:8080";
+        String sessionCookie = Reusable.getSessionCookie();
 
         given().
                 header("Content-Type", "application/json").
-                header("Cookie", Reusable.getSessionCookie()).
+                header("Cookie", sessionCookie).
                 body("{\n" +
                         "    \"fields\": {\n" +
                         "       \"project\":\n" +
